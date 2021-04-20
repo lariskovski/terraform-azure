@@ -1,0 +1,16 @@
+subscription_id = ""
+client_id       = ""
+client_secret   = ""
+tenant_id       = ""
+
+administrator_login = ""
+administrator_login_password = ""
+database_names = ["db1", "db2", "db3", "db4"]
+
+
+resource_group_name = ""
+
+project_name = ""
+environment = ""
+
+app_names = ["app1", "app2"]
