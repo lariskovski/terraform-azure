@@ -91,6 +91,11 @@ resource "azurerm_app_service_plan" "asp" {
 #   template = "${file("settings/app-settings.txt")}"
 # }
 
+data "external" "example" {
+  program = ["cat", "settings/app-settings.json"]
+  query = { }
+}
+
 resource "azurerm_app_service" "as" {
   count               = length(var.app_names)
   name                = "${var.project_name}-${var.environment}-${var.app_names[count.index]}"
@@ -103,12 +108,13 @@ resource "azurerm_app_service" "as" {
     scm_type                 = "LocalGit"
   }
 
-  app_settings = {
-    "SOME_KEY" = "some-value",
-    "ANOTHER_KEY" = "another-value"
-  }
+  # app_settings = {
+  #   "SOME_KEY" = "some-value",
+  #   "ANOTHER_KEY" = "another-value"
+  # }
 
-#   app_settings = "${data.template_file.app_settings.rendered}"
+  # app_settings = "${data.template_file.app_settings.rendered}"
+  app_settings = "${data.external.example.result}"
 
   connection_string {
     name  = "MSSQL"
